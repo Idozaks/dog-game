@@ -6,6 +6,36 @@ class DetectiveGame:
         self.witnesses = []
         self.clues = []
 
+    def perform_action(self, action):
+        """ Perform an action based on the player's choice. """
+        print(f"Performing action: {action}")
+        if action == "Investigate the park":
+            return self.investigate_park()
+        elif action == "Re-interview the Local Cat":
+            return self.re_interview_local_cat()
+        elif action == "Check the backyard":
+            return self.check_backyard()
+        else:
+            print("Invalid action.")
+            return None
+
+    def investigate_park(self):
+        """ Investigate the park. """
+        print("investigate")
+        # Placeholder for park investigation logic
+        return "Found a mysterious collar in the park."
+
+    def re_interview_local_cat(self):
+        """ Re-interview the Local Cat. """
+        print("Re-interviewing the Local Cat...")
+        # Placeholder for re-interview logic
+        return "The Local Cat reveals it heard a strange noise last night."
+
+    def check_backyard(self):
+        """ Check the backyard. """
+        print("Checking the backyard...")
+        # Placeholder for backyard check logic
+        return "Discovered paw prints leading to the neighbor's house."
     def add_evidence(self, evidence):
         """ Add evidence to the game. """
         self.evidence.append(evidence)
@@ -48,6 +78,40 @@ class DetectiveGame:
         for action in actions:
             print(f"Suggested action: {action}")
         return actions
+  # Existing initialization and methods...
+
+    def perform_action(self, action):
+        """ Perform an action based on the player's choice. """
+        print(f"Performing action: {action}")
+        if action == "investigate":
+            return self.investigate_park()
+        elif action == "Re-interview the Local Cat":
+            return self.re_interview_local_cat()
+        elif action == "Check the backyard":
+            return self.check_backyard()
+        else:
+            print("Invalid action.")
+            return None
+
+    def investigate_park(self):
+        """ Investigate the park. """
+        print("Investigating the park...")
+        # Placeholder for park investigation logic
+        return "Found a mysterious collar in the park."
+
+    def re_interview_local_cat(self):
+        """ Re-interview the Local Cat. """
+        print("Re-interviewing the Local Cat...")
+        # Placeholder for re-interview logic
+        return "The Local Cat reveals it heard a strange noise last night."
+
+    def check_backyard(self):
+        """ Check the backyard. """
+        print("Checking the backyard...")
+        # Placeholder for backyard check logic
+        return "Discovered paw prints leading to the neighbor's house."
+
+
 
 class Dialogue:
     def __init__(self):
@@ -70,8 +134,21 @@ class Dialogue:
         print(f"User responded: {user_input}")
         return user_input
 
-# Example usage with a different scenario
+
+# Continuing the code to handle the gameplay based on the suggested actions.
+
+
 game = DetectiveGame()
+# Example of performing an action
+action_result = game.perform_action("Investigate the park")
+print(action_result)
+
+# The following code requires interactive user input, so it won't run here. Uncomment in your environment:
+# user_choice = input("Choose your next action: ")
+# action_result = game.perform_action(user_choice)
+# print(action_result)
+
+# Example usage with a different scenario
 game.add_evidence("Dog Toy")
 game.add_evidence("Paw Print")
 game.add_witness("Local Cat")
@@ -81,9 +158,9 @@ dialogue_system = Dialogue()
 dialogue_system.add_dialogue("Local Cat", "I saw something suspicious last night.")
 dialogue_system.add_dialogue("Neighborhood Squirrel", "There's a strange scent in the air.")
 
-#The following lines of code require user interaction and hence won't execute in this environment:
-user_response = dialogue_system.wait_for_user_response()
+# The following lines of code require user interaction and hence won't execute in this environment:
 ai_response = dialogue_system.generate_response("What should we do next?")
 suggested_actions = game.suggest_actions()
+user_response = dialogue_system.wait_for_user_response()
 
 # Uncomment these lines when running the code in an interactive Python environment.
