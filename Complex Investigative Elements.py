@@ -70,7 +70,7 @@ class Dialogue:
         print(f"User responded: {user_input}")
         return user_input
 
-# Example usage with a different scenario
+#Example usage with a different scenario
 game = DetectiveGame()
 game.add_evidence("Dog Toy")
 game.add_evidence("Paw Print")
