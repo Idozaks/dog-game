@@ -57,7 +57,7 @@ class Dialogue:
     def wait_for_user_response(self):
         """ Wait for user response (simulated). """
         # Placeholder for waiting for user input
-        self.user_input = "User's simulated response"
+        self.user_input = input("Enter response: ")
         return self.user_input
 
 # Example usage with a different scenario
