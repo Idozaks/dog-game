@@ -81,9 +81,9 @@ dialogue_system = Dialogue()
 dialogue_system.add_dialogue("Local Cat", "I saw something suspicious last night.")
 dialogue_system.add_dialogue("Neighborhood Squirrel", "There's a strange scent in the air.")
 
-# The following lines of code require user interaction and hence won't execute in this environment:
-# user_response = dialogue_system.wait_for_user_response()
-# ai_response = dialogue_system.generate_response("What should we do next?")
-# suggested_actions = game.suggest_actions()
+#The following lines of code require user interaction and hence won't execute in this environment:
+user_response = dialogue_system.wait_for_user_response()
+ai_response = dialogue_system.generate_response("What should we do next?")
+suggested_actions = game.suggest_actions()
 
 # Uncomment these lines when running the code in an interactive Python environment.
