@@ -1,4 +1,5 @@
-##Work in progress##
+## Work in progress ##
+
 # Bloodhound Chapter Design for Unity Game
 
 ## Chapter Title: "The Scent of Mystery"
