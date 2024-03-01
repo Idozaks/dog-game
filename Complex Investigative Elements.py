@@ -1,166 +1,242 @@
-# Adding print statements with f-strings to the provided code for storytelling.
+let game;
+let dialogueSystem;
+let userInput, submitButton; 
+const witnessName = "Neighborhood Squirrel"; 
 
-class DetectiveGame:
-    def __init__(self):
-        self.evidence = []
-        self.witnesses = []
-        self.clues = []
+function setup() {
+  createCanvas(600, 400);
+  game = new DetectiveGame();
+  dialogueSystem = new Dialogue();
+  userInput = createInput('');
+  submitButton = createButton('Submit'); 
 
-    def perform_action(self, action):
-        """ Perform an action based on the player's choice. """
-        print(f"Performing action: {action}")
-        if action == "Investigate the park":
-            return self.investigate_park()
-        elif action == "Re-interview the Local Cat":
-            return self.re_interview_local_cat()
-        elif action == "Check the backyard":
-            return self.check_backyard()
-        else:
-            print("Invalid action.")
-            return None
+  // Setup positions for input elements
+  userInput.position(20, height - 40); 
+  submitButton.position(userInput.x + userInput.width + 10, userInput.y);
+  submitButton.mousePressed(handleSubmitInput);
 
-    def investigate_park(self):
-        """ Investigate the park. """
-        print("investigate")
-        # Placeholder for park investigation logic
-        return "Found a mysterious collar in the park."
+  dialogueSystem.add_dialogue(witnessName, "The humans are acting strange...something's missing! *Scampers up a tree*");
+}
 
-    def re_interview_local_cat(self):
-        """ Re-interview the Local Cat. """
-        print("Re-interviewing the Local Cat...")
-        # Placeholder for re-interview logic
-        return "The Local Cat reveals it heard a strange noise last night."
-
-    def check_backyard(self):
-        """ Check the backyard. """
-        print("Checking the backyard...")
-        # Placeholder for backyard check logic
-        return "Discovered paw prints leading to the neighbor's house."
-    def add_evidence(self, evidence):
-        """ Add evidence to the game. """
-        self.evidence.append(evidence)
-        print(f"New evidence added: {evidence}")
-
-    def add_witness(self, witness):
-        """ Add a witness to the game. """
-        self.witnesses.append(witness)
-        print(f"New witness added: {witness}")
-
-    def analyze_evidence(self):
-        """ Analyze all collected evidence. """
-        print("Analyzing evidence...")
-        analyzed_data = {}
-        for item in self.evidence:
-            analyzed_data[item] = f"Analyzed data for {item} (dog's perspective)"
-            print(f"Evidence {item} analyzed.")
-        return analyzed_data
-
-    def interview_witnesses(self):
-        """ Conduct interviews with all witnesses. """
-        print("Interviewing witnesses...")
-        interview_outcomes = {}
-        for witness in self.witnesses:
-            interview_outcomes[witness] = f"Insights from {witness} (dog's perspective)"
-            print(f"Witness {witness} interviewed.")
-        return interview_outcomes
-
-    def piece_together_information(self):
-        """ Piece together clues from evidence and witness interviews. """
-        print("Piecing together clues...")
-        self.clues = ["Clue derived from a dog's perspective", "Another clue from a dog's viewpoint"]
-        print("Clues have been pieced together.")
-        return self.clues
-
-    def suggest_actions(self):
-        """ Suggest possible actions based on the current state of the game. """
-        print("Suggesting actions based on the current clues...")
-        actions = ["Investigate the park", "Re-interview the Local Cat", "Check the backyard"]
-        for action in actions:
-            print(f"Suggested action: {action}")
-        return actions
-  # Existing initialization and methods...
-
-    def perform_action(self, action):
-        """ Perform an action based on the player's choice. """
-        print(f"Performing action: {action}")
-        if action == "investigate":
-            return self.investigate_park()
-        elif action == "Re-interview the Local Cat":
-            return self.re_interview_local_cat()
-        elif action == "Check the backyard":
-            return self.check_backyard()
-        else:
-            print("Invalid action.")
-            return None
-
-    def investigate_park(self):
-        """ Investigate the park. """
-        print("Investigating the park...")
-        # Placeholder for park investigation logic
-        return "Found a mysterious collar in the park."
-
-    def re_interview_local_cat(self):
-        """ Re-interview the Local Cat. """
-        print("Re-interviewing the Local Cat...")
-        # Placeholder for re-interview logic
-        return "The Local Cat reveals it heard a strange noise last night."
-
-    def check_backyard(self):
-        """ Check the backyard. """
-        print("Checking the backyard...")
-        # Placeholder for backyard check logic
-        return "Discovered paw prints leading to the neighbor's house."
+function draw() {
+  background(220);
+  displayEvidence(); 
+  displayDialogue();
+  displayActions(); 
+}
 
 
+function displayEvidence() {
+  text("Evidence:", 20, 30);
+  for (let i = 0; i < game.evidence.length; i++) {
+    let y = 50 + i * 20; 
+    text(game.evidence[i].evidence, 20, y);
+    text(` - ${game.evidence[i].witness}`, 150, y);
+  }
+}
 
-class Dialogue:
-    def __init__(self):
-        self.dialogues = []
+function displayDialogue() {
+  text(dialogueSystem.getCurrentDialogue(), 20, height - 100);
+}
 
-    def add_dialogue(self, speaker, message):
-        """ Add dialogue to the game. """
-        self.dialogues.append((speaker, message))
-        print(f"{speaker} says: {message}")
+function displayActions() {
+  // Placeholder: Implement suggestion of actions based on game state
+}
 
-    def generate_response(self, input_text):
-        """ Generate a response using AI capabilities (placeholder). """
-        response = f"AI-generated response to: {input_text}"
-        print(response)
-        return response
+function handleSubmitInput() {
+  let currentInput = userInput.value();
+  handlePlayerAction(currentInput); 
+  userInput.value('');
+}
 
-    def wait_for_user_response(self):
-        """ Wait for user response (simulated). """
-        user_input = input("Enter response: ")
-        print(f"User responded: {user_input}")
-        return user_input
+function handlePlayerAction(action) {
+  // Update game state/display based on the player's submitted input
+  let result = game.perform_action(action);
+  if (result) {
+    dialogueSystem.add_dialogue("You", result);
+  }
+}
+
+class DetectiveGame {
+  constructor() {
+    this.evidence = []; 
+    this.witnesses = [];
+    this.currentLocation = "park"; 
+  }
+
+  perform_action(action) {
+    if (action === "sniff park") {
+      return this.investigate_park();
+    } // ... add more actions here
+  }
+
+  investigate_park() {
+    this.addEvidence("metallic scent", witnessName); 
+    return "You sniff intently... the air is thick with the scent of another dog... and something... metallic?";
+  }
+
+  add_evidence(evidence, witness) { 
+    this.evidence.push({ evidence: evidence, witness: witness }); 
+  }
+
+  suggest_actions() { 
+    if (this.currentLocation === "park") {
+      return ["sniff park", "question local cat"]; 
+    } // ... add more
+  }
+}
+
+class Dialogue {
+  constructor() {
+    this.dialogues = [];
+  }
+
+  add_dialogue(speaker, message) {
+    this.dialogues.push({ slet game;
+let dialogueSystem;
+let userInput, submitButton; 
+const witnessName = "Neighborhood Squirrel"; 
+
+function setup() {
+  createCanvas(600, 400);
+  game = new DetectiveGame();
+  dialogueSystem = new Dialogue();
+  userInput = createInput('');
+  submitButton = createButton('Submit'); 
+
+  // Setup positions for input elements
+  userInput.position(20, height - 40); 
+  submitButton.position(userInput.x + userInput.width + 10, userInput.y);
+  submitButton.mousePressed(handleSubmitInput);
+
+  dialogueSystem.add_dialogue(witnessName, "The humans are acting strange...something's missing! *Scampers up a tree*");
+}
+
+function draw() {
+  background(220);
+  displayEvidence(); 
+  displayDialogue();
+  displayActions(); 
+  text("Investigation Points: " + investigationManager.getCurrentPoints(), 20, height - 60); 
+}
 
 
-# Continuing the code to handle the gameplay based on the suggested actions.
+function displayEvidence() {
+  text("Evidence:", 20, 30);
+  for (let i = 0; i < game.evidence.length; i++) {
+    let y = 50 + i * 20; 
+    text(game.evidence[i].evidence, 20, y);
+    text(` - ${game.evidence[i].witness}`, 150, y);
+  }
+}
 
+function displayDialogue() {
+  text(dialogueSystem.getCurrentDialogue(), 20, height - 100);
+}
 
-game = DetectiveGame()
-# Example of performing an action
-action_result = game.perform_action("Investigate the park")
-print(action_result)
+function displayActions() {
+  // Placeholder: Implement suggestion of actions based on game state
+}
 
-# The following code requires interactive user input, so it won't run here. Uncomment in your environment:
-# user_choice = input("Choose your next action: ")
-# action_result = game.perform_action(user_choice)
-# print(action_result)
+function handleSubmitInput() {
+  let currentInput = userInput.value();
+  handlePlayerAction(currentInput); 
+  userInput.value('');
+}
 
-# Example usage with a different scenario
-game.add_evidence("Dog Toy")
-game.add_evidence("Paw Print")
-game.add_witness("Local Cat")
-game.add_witness("Neighborhood Squirrel")
+function handlePlayerAction(action) {
+  // Update game state/display based on the player's submitted input
+  let result = game.perform_action(action);
+  if (result) {
+    dialogueSystem.add_dialogue("You", result);
+  }
+}
 
-dialogue_system = Dialogue()
-dialogue_system.add_dialogue("Local Cat", "I saw something suspicious last night.")
-dialogue_system.add_dialogue("Neighborhood Squirrel", "There's a strange scent in the air.")
+class DetectiveGame {
+  constructor() {
+    this.evidence = []; 
+    this.witnesses = [];
+    this.currentLocation = "park"; 
+  }
 
-# The following lines of code require user interaction and hence won't execute in this environment:
-ai_response = dialogue_system.generate_response("What should we do next?")
-suggested_actions = game.suggest_actions()
-user_response = dialogue_system.wait_for_user_response()
+  perform_action(action) {
+    if (action === "sniff park") {
+      return this.investigate_park();
+    } // ... add more actions here
+  }
 
-# Uncomment these lines when running the code in an interactive Python environment.
+  investigate_park() {
+    this.addEvidence("metallic scent", witnessName); 
+    return "You sniff intently... the air is thick with the scent of another dog... and something... metallic?";
+  }
+
+  add_evidence(evidence, witness) { 
+    this.evidence.push({ evidence: evidence, witness: witness }); 
+  }
+
+  suggest_actions() { 
+    if (this.currentLocation === "park") {
+      return ["sniff park", "question local cat"]; 
+    } // ... add more
+  }
+}
+
+class Dialogue {
+  constructor() {
+    this.dialogues = [];
+  }
+
+  add_dialogue(speaker, message) {
+    this.dialogues.push({ speaker: speaker, message: message });
+  }
+
+  getCurrentDialogue() {
+    if (this.dialogues.length > 0) {
+      return this.dialogues[0].speaker + " says: " + this.dialogues[0].message;
+    } else {
+      return "";
+    }
+  }
+}
+class InvestigationManager {
+  constructor(startingPoints) {
+    this.currentPoints = startingPoints;
+  }
+
+  deductPoints(cost) {
+    this.currentPoints -= cost;
+    if (this.currentPoints < 0) {
+      this.currentPoints = 0; // Prevent negative points
+    }
+  }
+
+  hasEnoughPoints(cost) {
+    return this.currentPoints >= cost;
+  }
+
+  getCurrentPoints() {
+    return this.currentPoints;
+  }
+}
+let investigationManager = new InvestigationManager(10); // Start with 10 points
+function handlePlayerAction(action) {
+  let actionCost = 2; // Example cost - you can have different costs for different actions
+
+  if (investigationManager.hasEnoughPoints(actionCost)) {
+    investigationManager.deductPoints(actionCost);
+    // Allow the player to perform the action here (your existing code)
+  } else {
+    dialogueSystem.add_dialogue("You", "Not enough investigation points!");
+  }
+}
+peaker: speaker, message: message });
+  }
+
+  getCurrentDialogue() {
+    if (this.dialogues.length > 0) {
+      return this.dialogues[0].speaker + " says: " + this.dialogues[0].message;
+    } else {
+      return "";
+    }
+  }
+}
