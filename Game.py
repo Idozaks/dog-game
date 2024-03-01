@@ -1,8 +1,4 @@
-class DetectiveGame:
-    def __init__(self):
-        self.evidence = []
-        self.witnesses = []
-        self.clues = []
+
 
     def add_evidence(self, evidence):
         """Add evidence to the game."""
